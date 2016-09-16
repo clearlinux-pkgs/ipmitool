@@ -4,7 +4,7 @@
 #
 Name     : ipmitool
 Version  : 1.8.17
-Release  : 2
+Release  : 3
 URL      : http://downloads.sourceforge.net/project/ipmitool/ipmitool/1.8.17/ipmitool-1.8.17.tar.bz2
 Source0  : http://downloads.sourceforge.net/project/ipmitool/ipmitool/1.8.17/ipmitool-1.8.17.tar.bz2
 Summary  : ipmitool - Utility for IPMI control
