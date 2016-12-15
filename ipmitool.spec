@@ -4,7 +4,7 @@
 #
 Name     : ipmitool
 Version  : 1.8.18
-Release  : 5
+Release  : 6
 URL      : http://downloads.sourceforge.net/project/ipmitool/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Source0  : http://downloads.sourceforge.net/project/ipmitool/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Summary  : ipmitool - Utility for IPMI control
@@ -14,6 +14,7 @@ Requires: ipmitool-bin
 Requires: ipmitool-doc
 Requires: ipmitool-data
 BuildRequires : ncurses-dev
+BuildRequires : openssl-dev
 BuildRequires : readline-dev
 
 %description
