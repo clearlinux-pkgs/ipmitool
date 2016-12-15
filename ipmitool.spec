@@ -4,7 +4,7 @@
 #
 Name     : ipmitool
 Version  : 1.8.18
-Release  : 4
+Release  : 5
 URL      : http://downloads.sourceforge.net/project/ipmitool/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Source0  : http://downloads.sourceforge.net/project/ipmitool/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Summary  : ipmitool - Utility for IPMI control
@@ -61,7 +61,7 @@ doc components for the ipmitool package.
 
 %build
 export LANG=C
-%configure --disable-static
+%configure --disable-static --enable-intf-lanplus --enable-intf-usb --enable-intf-imb
 make V=1  %{?_smp_mflags}
 
 %check
