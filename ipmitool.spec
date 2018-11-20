@@ -4,18 +4,20 @@
 #
 Name     : ipmitool
 Version  : 1.8.18
-Release  : 11
+Release  : 12
 URL      : http://downloads.sourceforge.net/project/ipmitool/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Source0  : http://downloads.sourceforge.net/project/ipmitool/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Summary  : ipmitool - Utility for IPMI control
 Group    : Development/Tools
 License  : BSD-3-Clause
-Requires: ipmitool-bin
-Requires: ipmitool-doc
-Requires: ipmitool-data
+Requires: ipmitool-bin = %{version}-%{release}
+Requires: ipmitool-data = %{version}-%{release}
+Requires: ipmitool-license = %{version}-%{release}
+Requires: ipmitool-man = %{version}-%{release}
 BuildRequires : ncurses-dev
 BuildRequires : openssl-dev
 BuildRequires : readline-dev
+Patch1: 0002-openssl.patch
 
 %description
 This package contains a utility for interfacing with devices that support
@@ -35,7 +37,9 @@ setting LAN configuration, and chassis power control.
 %package bin
 Summary: bin components for the ipmitool package.
 Group: Binaries
-Requires: ipmitool-data
+Requires: ipmitool-data = %{version}-%{release}
+Requires: ipmitool-license = %{version}-%{release}
+Requires: ipmitool-man = %{version}-%{release}
 
 %description bin
 bin components for the ipmitool package.
@@ -52,28 +56,53 @@ data components for the ipmitool package.
 %package doc
 Summary: doc components for the ipmitool package.
 Group: Documentation
+Requires: ipmitool-man = %{version}-%{release}
 
 %description doc
 doc components for the ipmitool package.
 
 
+%package license
+Summary: license components for the ipmitool package.
+Group: Default
+
+%description license
+license components for the ipmitool package.
+
+
+%package man
+Summary: man components for the ipmitool package.
+Group: Default
+
+%description man
+man components for the ipmitool package.
+
+
 %prep
 %setup -q -n ipmitool-1.8.18
+%patch1 -p1
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
+export SOURCE_DATE_EPOCH=1542691909
 %configure --disable-static --enable-intf-lanplus --enable-intf-usb --enable-intf-imb
-make V=1  %{?_smp_mflags}
+make  %{?_smp_mflags}
 
 %check
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
+export SOURCE_DATE_EPOCH=1542691909
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/ipmitool
+cp COPYING %{buildroot}/usr/share/package-licenses/ipmitool/COPYING
 %make_install
 
 %files
@@ -89,7 +118,14 @@ rm -rf %{buildroot}
 /usr/share/ipmitool/oem_ibm_sel_map
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 %doc /usr/share/doc/ipmitool/*
-%doc /usr/share/man/man1/*
-%doc /usr/share/man/man8/*
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/ipmitool/COPYING
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/ipmitool.1
+/usr/share/man/man8/ipmievd.8
