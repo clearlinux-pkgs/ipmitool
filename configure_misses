@@ -13,12 +13,6 @@ Configure miss: OpenIPMI dual bridge support
 Configure miss: sys/lipmi/lipmi_intf.h usability
 Configure miss: sys/lipmi/lipmi_intf.h presence
 Configure miss: sys/lipmi/lipmi_intf.h
-Configure miss: ipmi_sensor.c:235:3: warning: format not a string literal, argument types not checked [-Wformat-nonliteral]
-
-Configure miss: ipmi_sensor.c:239:3: warning: format not a string literal, argument types not checked [-Wformat-nonliteral]
-
-Configure miss: ipmi_sensor.c:241:3: warning: format not a string literal, argument types not checked [-Wformat-nonliteral]
-
 Configure miss: ipmi_pef.c:103:4: warning: format not a string literal, argument types not checked [-Wformat-nonliteral]
 
 Configure miss: ipmi_pef.c:134:4: warning: format not a string literal, argument types not checked [-Wformat-nonliteral]
@@ -28,3 +22,9 @@ Configure miss: ipmi_pef.c:146:3: warning: format not a string literal, argument
 Configure miss: ipmi_pef.c:148:3: warning: format not a string literal, argument types not checked [-Wformat-nonliteral]
 
 Configure miss: ipmi_pef.c:150:3: warning: format not a string literal, argument types not checked [-Wformat-nonliteral]
+
+Configure miss: ipmi_sensor.c:235:3: warning: format not a string literal, argument types not checked [-Wformat-nonliteral]
+
+Configure miss: ipmi_sensor.c:239:3: warning: format not a string literal, argument types not checked [-Wformat-nonliteral]
+
+Configure miss: ipmi_sensor.c:241:3: warning: format not a string literal, argument types not checked [-Wformat-nonliteral]
