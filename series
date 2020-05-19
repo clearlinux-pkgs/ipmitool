@@ -1,1 +1,2 @@
 0002-openssl.patch
+ipmitool-1.8.18-fno-common.patch

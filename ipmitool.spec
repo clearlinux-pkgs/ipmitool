@@ -4,7 +4,7 @@
 #
 Name     : ipmitool
 Version  : 1.8.18
-Release  : 14
+Release  : 15
 URL      : https://sourceforge.net/projects/ipmitool/files/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Source0  : https://sourceforge.net/projects/ipmitool/files/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Summary  : ipmitool - Utility for IPMI control
@@ -18,6 +18,7 @@ BuildRequires : ncurses-dev
 BuildRequires : openssl-dev
 BuildRequires : readline-dev
 Patch1: 0002-openssl.patch
+Patch2: ipmitool-1.8.18-fno-common.patch
 
 %description
 This package contains a utility for interfacing with devices that support
@@ -39,7 +40,6 @@ Summary: bin components for the ipmitool package.
 Group: Binaries
 Requires: ipmitool-data = %{version}-%{release}
 Requires: ipmitool-license = %{version}-%{release}
-Requires: ipmitool-man = %{version}-%{release}
 
 %description bin
 bin components for the ipmitool package.
@@ -80,29 +80,36 @@ man components for the ipmitool package.
 
 %prep
 %setup -q -n ipmitool-1.8.18
+cd %{_builddir}/ipmitool-1.8.18
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1545265447
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1589904964
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure --disable-static --enable-intf-lanplus --enable-intf-usb --enable-intf-imb
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1545265447
+export SOURCE_DATE_EPOCH=1589904964
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ipmitool
-cp COPYING %{buildroot}/usr/share/package-licenses/ipmitool/COPYING
+cp %{_builddir}/ipmitool-1.8.18/COPYING %{buildroot}/usr/share/package-licenses/ipmitool/4193a874862867b180608c3297b0239cc883b7d2
 %make_install
 
 %files
@@ -123,7 +130,7 @@ cp COPYING %{buildroot}/usr/share/package-licenses/ipmitool/COPYING
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/ipmitool/COPYING
+/usr/share/package-licenses/ipmitool/4193a874862867b180608c3297b0239cc883b7d2
 
 %files man
 %defattr(0644,root,root,0755)
