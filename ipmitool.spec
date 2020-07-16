@@ -4,7 +4,7 @@
 #
 Name     : ipmitool
 Version  : 1.8.18
-Release  : 15
+Release  : 16
 URL      : https://sourceforge.net/projects/ipmitool/files/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Source0  : https://sourceforge.net/projects/ipmitool/files/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Summary  : ipmitool - Utility for IPMI control
@@ -19,6 +19,9 @@ BuildRequires : openssl-dev
 BuildRequires : readline-dev
 Patch1: 0002-openssl.patch
 Patch2: ipmitool-1.8.18-fno-common.patch
+Patch3: 0009-best-cipher.patch
+Patch4: 0010-pef-missing-newline.patch
+Patch5: CVE-2020-5208.patch
 
 %description
 This package contains a utility for interfacing with devices that support
@@ -83,18 +86,21 @@ man components for the ipmitool package.
 cd %{_builddir}/ipmitool-1.8.18
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1589904964
+export SOURCE_DATE_EPOCH=1594874447
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$FFLAGS -fno-lto "
-export FFLAGS="$FFLAGS -fno-lto "
-export CXXFLAGS="$CXXFLAGS -fno-lto "
+export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static --enable-intf-lanplus --enable-intf-usb --enable-intf-imb
 make  %{?_smp_mflags}
 
@@ -106,7 +112,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1589904964
+export SOURCE_DATE_EPOCH=1594874447
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ipmitool
 cp %{_builddir}/ipmitool-1.8.18/COPYING %{buildroot}/usr/share/package-licenses/ipmitool/4193a874862867b180608c3297b0239cc883b7d2

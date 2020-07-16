@@ -1,2 +1,5 @@
 0002-openssl.patch
 ipmitool-1.8.18-fno-common.patch
+0009-best-cipher.patch
+0010-pef-missing-newline.patch
+CVE-2020-5208.patch
