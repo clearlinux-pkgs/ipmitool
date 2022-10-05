@@ -4,7 +4,7 @@
 #
 Name     : ipmitool
 Version  : 1.8.18
-Release  : 18
+Release  : 19
 URL      : https://sourceforge.net/projects/ipmitool/files/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Source0  : https://sourceforge.net/projects/ipmitool/files/ipmitool/1.8.18/ipmitool-1.8.18.tar.bz2
 Summary  : ipmitool - Utility for IPMI control
@@ -95,7 +95,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1663083357
+export SOURCE_DATE_EPOCH=1664936674
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
 export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
@@ -112,7 +112,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1663083357
+export SOURCE_DATE_EPOCH=1664936674
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ipmitool
 cp %{_builddir}/ipmitool-%{version}/COPYING %{buildroot}/usr/share/package-licenses/ipmitool/4193a874862867b180608c3297b0239cc883b7d2 || :
